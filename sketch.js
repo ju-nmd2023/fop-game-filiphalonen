@@ -25,6 +25,17 @@ function draw() {
   for (let platform of platforms) {
     platform.move();
     platform.draw();
+
+    // platform detection
+    if (
+      player.y + player.height >= platform.y &&
+      player.y <= platform.y &&
+      player.x + player.width > platform.x &&
+      player.x < platform.x + platform.width &&
+      player.velocityY > 0
+    ) {
+      player.velocityY = player.jumpStrength;
+    }
   }
 
   player.move();
