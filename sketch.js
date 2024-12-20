@@ -1,11 +1,17 @@
 let player;
-let platform;
+let platforms = [];
 
 // game environment
 function setup() {
-  createCanvas(500, 670);
+  createCanvas(550, 700);
   player = new Character();
-  platform = new Platform();
+
+  // loop for platforms
+  for (let i = 0; i < 5; i++) {
+    let x = random(width - 100);
+    let y = height - i * 150;
+    platforms.push(new Platform(x, y));
+  }
 }
 
 function draw() {
@@ -16,8 +22,10 @@ function draw() {
   rect(0, height - 20, width, 20);
 
   // movement and game mechanics
-  platform.move();
-  platform.draw();
+  for (let platform of platforms) {
+    platform.move();
+    platform.draw();
+  }
 
   player.move();
   player.applyGravity();
