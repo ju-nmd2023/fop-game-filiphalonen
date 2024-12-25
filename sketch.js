@@ -1,6 +1,6 @@
 let player;
 let platforms = [];
-let scrollOffset = 0;
+let platformSpacing = 150;
 
 // game environment
 function setup() {
@@ -56,7 +56,15 @@ function draw() {
     // add new platforms at the top
     while (platforms.length < 6) {
       let x = random(width - 150);
-      let y = -20;
+
+      // The following 5 lines of code was adapted from https://chatgpt.com/share/676c0dfa-8418-8000-8206-3e633acd24bf Accessed: 2023-12-25
+      let y;
+      if (platforms.length === 0) {
+        y = -20;
+      } else {
+        y = platforms[platforms.length - 1].y - platformSpacing;
+      }
+
       let type = random(["stationary", "moving", "breaking"]);
       platforms.push(new Platform(x, y, type));
     }
