@@ -1,5 +1,5 @@
 class Platform {
-  constructor(x, y, type = "stationary", width = 100, height = 10, speed = 2) {
+  constructor(x, y, type = "stationary", width = 80, height = 10, speed = 2) {
     this.x = x;
     this.y = y;
     this.width = width;
