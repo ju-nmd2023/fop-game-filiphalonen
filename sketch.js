@@ -1,8 +1,5 @@
-let player;
-let platforms = [];
 let platformSpacing = 150;
 let gameState = "start";
-let score = 0;
 
 // game environment
 function setup() {
@@ -16,23 +13,20 @@ function draw() {
     fill(0, 200, 0);
     textAlign(CENTER, CENTER);
     textSize(30);
-    text("Welcome to Arcade Doodle Jump!", width / 2, height / 2 - 120);
+    text("Welcome to Arcade Doodle Jump", width / 2, height / 2 - 120);
     fill(255);
     textSize(20);
     text(
-      "Use the arrow keys to move and jump on the platforms!",
+      "Work your way up, but beware the red platforms!",
       width / 2,
-      height / 2 - 60
+      height / 2 - 30
     );
-    text("Press ENTER to start", width / 2, height / 2 + 20);
+    text("Use the left and right arrow keys to move", width / 2, height / 2);
+    text("Press ENTER to start", width / 2, height / 2 + 80);
   }
   // gameplay screen
   else if (gameState === "playing") {
     background(0);
-
-    // blue ground
-    fill(0, 100, 225);
-    rect(0, height - 20, width, 20);
 
     // display score while playing
     fill(0, 255, 0);
@@ -72,7 +66,7 @@ function draw() {
       // remove platforms that are off-screen
       platforms = platforms.filter((platform) => platform.y <= height);
 
-      while (platforms.length < 6) {
+      while (platforms.length < 5) {
         let x = random(width - 150);
         // The following line of code was adapted from https://chatgpt.com/share/676c0dfa-8418-8000-8206-3e633acd24bf Accessed: 2023-12-25
         let y = platforms[platforms.length - 1]?.y - platformSpacing;
@@ -82,7 +76,7 @@ function draw() {
     }
 
     // check for game over
-    if (player.y > 650) {
+    if (player.y > height) {
       gameState = "result";
     }
   }
@@ -97,7 +91,7 @@ function draw() {
     textSize(20);
     text("Score: " + score, width / 2, height / 2);
     fill(255);
-    text("Press ENTER to play again", width / 2, height / 2 + 40);
+    text("Press ENTER to play again", width / 2, height / 2 + 50);
   }
 }
 
@@ -113,6 +107,7 @@ function keyPressed() {
       let y = height - 150 - i * 150;
       let type = random(["stationary", "moving", "breaking"]);
       platforms.push(new Platform(x, y, type));
+      platforms.push(new Platform(225, 680, "stationary"));
     }
   }
 }
