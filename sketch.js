@@ -2,6 +2,7 @@ let player;
 let platforms = [];
 let platformSpacing = 150;
 let gameState = "start";
+let score = 0;
 
 // game environment
 function setup() {
@@ -33,6 +34,12 @@ function draw() {
     fill(0, 100, 225);
     rect(0, height - 20, width, 20);
 
+    // display score while playing
+    fill(0, 255, 0);
+    textSize(20);
+    textAlign(LEFT, TOP);
+    text("Score: " + score, 10, 10);
+
     // move and draw platforms
     for (let platform of platforms) {
       platform.move();
@@ -53,6 +60,9 @@ function draw() {
     if (player.y < scrolling) {
       let scrollAmount = scrolling - player.y;
       player.y = scrolling;
+
+      // increase score based on scrolling
+      score += Math.round(scrollAmount);
 
       // move platforms downward
       for (let platform of platforms) {
@@ -79,10 +89,15 @@ function draw() {
   // result screen
   else if (gameState === "result") {
     background(0);
-    fill(255);
+    fill(255, 0, 0);
     textAlign(CENTER, CENTER);
+    textSize(30);
+    text("Game Over!", width / 2, height / 2 - 50);
+    fill(0, 255, 0);
     textSize(20);
-    text("Press ENTER to play again", width / 2, height / 2 + 20);
+    text("Score: " + score, width / 2, height / 2);
+    fill(255);
+    text("Press ENTER to play again", width / 2, height / 2 + 40);
   }
 }
 
@@ -90,6 +105,7 @@ function draw() {
 function keyPressed() {
   if (keyCode === ENTER && (gameState === "start" || gameState === "result")) {
     gameState = "playing";
+    score = 0;
     player = new Character();
     platforms = [];
     for (let i = 0; i < 5; i++) {
